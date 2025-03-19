@@ -9,7 +9,7 @@ export const fetchEleves = async () => {
     const userRole = localStorage.getItem('userRole');
     
     const response = await fetch(
-      `http://localhost:5000/api/eleves?userId=${userId}&userRole=${userRole}`
+      `${API_URL}/eleves?userId=${userId}&userRole=${userRole}`
     );
     
     if (!response.ok) {
