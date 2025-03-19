@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, User, Phone, UserPlus } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 const Register = () => {
   const navigate = useNavigate();
   const [classes, setClasses] = useState([]);
@@ -26,11 +27,12 @@ const Register = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
         const [classesRes, elevesRes] = await Promise.all([
-          fetch('http://localhost:5000/api/classes'),
-          fetch('http://localhost:5000/api/eleves')
+          fetch(`${API_URL}/classes`),
+          fetch(`${API_URL}/eleves`)
         ]);
-        
+                
         const classesData = await classesRes.json();
         setClasses(classesData);
         
@@ -105,7 +107,8 @@ const Register = () => {
         userData.elevesIds = formData.elevesIds;
       }
 
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch(`${API_URL}/auth/login`, {
+
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
