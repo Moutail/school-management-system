@@ -1,0 +1,730 @@
+{
+  "admins": [
+    {
+      "id": "1",
+      "nom": "Admin Principal",
+      "email": "admin@example.com",
+      "password": "adminpass123",
+      "role": "admin",
+      "status": "actif",
+      "isPrimary": true,
+      "dateCreation": "2025-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "2",
+      "nom": "Admin Secondaire",
+      "email": "admin2@example.com",
+      "password": "adminpass456",
+      "role": "admin",
+      "status": "actif",
+      "isPrimary": false,
+      "createdBy": "1",
+      "dateCreation": "2025-03-10T14:30:00.000Z"
+    },
+    {
+      "id": "1742012051848",
+      "nom": "benjamin",
+      "email": "benjamin@gmail.com",
+      "password": "70121520Moutail",
+      "role": "admin",
+      "status": "actif",
+      "isPrimary": false,
+      "createdBy": "1",
+      "dateCreation": "2025-03-15T04:14:11.849Z"
+    }
+  ],
+  "settings": {
+    "anneeScolaire": "2025",
+    "montantScolarite": 0,
+    "dateRentree": null,
+    "nomEcole": "Mon École",
+    "adresseEcole": "",
+    "contactEcole": "",
+    "logoEcole": null,
+    "passwordPolicy": {
+      "minLength": 8,
+      "requireNumbers": true,
+      "requireSpecialChars": true,
+      "requireUppercase": true
+    }
+  },
+  "professeurs": [
+    {
+      "id": "1",
+      "nom": "John Doe",
+      "email": "john@example.com",
+      "password": "password123",
+      "classeId": "1",
+      "matieres": [
+        "Mathématiques",
+        "Physique"
+      ],
+      "status": "actif",
+      "classes": [
+        "1",
+        "1741976145452",
+        "2"
+      ]
+    },
+    {
+      "id": "2",
+      "nom": "Jane Smith",
+      "email": "jane@example.com",
+      "password": "password456",
+      "classeId": "1",
+      "matieres": [
+        "Français",
+        "Histoire"
+      ],
+      "status": "actif",
+      "classes": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "id": "1742144465100",
+      "nom": "cherif",
+      "email": "songoku@gmail.com",
+      "password": "70121520Moutail",
+      "matiere": "",
+      "telephone": "",
+      "classes": [
+        "1",
+        "1742076396894"
+      ],
+      "status": "actif"
+    }
+  ],
+  "eleves": [
+    {
+      "id": "1",
+      "nom": "Alice Martin",
+      "email": "alice@example.com",
+      "password": "password789",
+      "classeId": "1",
+      "dateNaissance": "2005-05-13",
+      "status": "actif",
+      "parentId": "1",
+      "fraisScolarite": {
+        "montantTotal": 500,
+        "montantPaye": 200,
+        "statut": "partiel",
+        "dernierPaiement": "2025-03-14T20:32:00.408Z"
+      }
+    },
+    {
+      "id": "2",
+      "nom": "Bob Wilson",
+      "email": "bob@example.com",
+      "password": "passwordabc",
+      "classeId": "1",
+      "dateNaissance": "2005-08-22",
+      "status": "actif",
+      "fraisScolarite": {
+        "montantTotal": 444,
+        "montantPaye": 444,
+        "statut": "complet",
+        "dernierPaiement": "2025-03-15T04:30:38.077Z"
+      },
+      "parentId": "1"
+    },
+    {
+      "id": "1742012386916",
+      "nom": "benj",
+      "email": "benja@gmail.com",
+      "password": "70121520Moutail",
+      "dateNaissance": "2025-03-24",
+      "classeId": "2",
+      "status": "actif",
+      "fraisScolarite": {
+        "montantTotal": 7000,
+        "montantPaye": 4000,
+        "statut": "partiel",
+        "dernierPaiement": "2025-03-15T04:28:49.784Z"
+      },
+      "parentId": "2"
+    }
+  ],
+  "parents": [
+    {
+      "id": "1",
+      "nom": "Jean Dupont",
+      "email": "jean.dupont@example.com",
+      "password": "password123",
+      "elevesIds": [
+        "1",
+        "2"
+      ],
+      "status": "actif",
+      "telephone": "0612345678"
+    },
+    {
+      "id": "2",
+      "nom": "benparent",
+      "email": "benjo@gmail.com",
+      "password": "111111111",
+      "status": "actif",
+      "dateCreation": "2025-03-15T04:27:33.338Z",
+      "telephone": "4383654933",
+      "elevesIds": [
+        "1742012386916"
+      ]
+    }
+  ],
+  "classes": [
+    {
+      "id": "1",
+      "nom": "Classe A",
+      "niveau": "1",
+      "anneeScolaire": "2023-2024",
+      "matieres": [
+        {
+          "id": "2",
+          "nom": "Français",
+          "professeurId": "2"
+        },
+        {
+          "id": "1739116103902",
+          "nom": "Mathematique",
+          "professeurId": "1"
+        },
+        {
+          "id": "1739505088671",
+          "nom": "Physique",
+          "professeurId": "1"
+        },
+        {
+          "id": "1741821872312",
+          "nom": "Histoir",
+          "professeurId": "2"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "nom": "Classe B",
+      "niveau": "1",
+      "anneeScolaire": "2023-2024",
+      "matieres": [
+        {
+          "id": "1739547457174",
+          "nom": "Histoir",
+          "professeurId": "1"
+        },
+        {
+          "id": "1742084613877",
+          "nom": "ECM",
+          "professeurId": "2"
+        }
+      ]
+    },
+    {
+      "id": "1742076396894",
+      "nom": "Classe C",
+      "niveau": "2",
+      "anneeScolaire": "2025-2026",
+      "matieres": []
+    }
+  ],
+  "cours": [
+    {
+      "id": "1742075473522",
+      "titre": "L,histoire du Togo",
+      "description": "la colonisation",
+      "classeId": "2",
+      "matiereId": "1739547457174",
+      "professeurId": "1",
+      "filepath": "uploads\\documents\\1742075473514-Devoir.docx",
+      "dateUpload": "2025-03-15T21:51:13.522Z"
+    },
+    {
+      "id": "1742075612494",
+      "titre": "Carrer",
+      "description": "le carrer",
+      "classeId": "1",
+      "matiereId": "1739116103902",
+      "professeurId": "1",
+      "filepath": "uploads\\documents\\1742075612478-Exercice de recherche.docx",
+      "dateUpload": "2025-03-15T21:53:32.494Z"
+    },
+    {
+      "id": "1742084654985",
+      "titre": "Education a la sociétée",
+      "description": "Description",
+      "classeId": "2",
+      "matiereId": "1742084613877",
+      "professeurId": "2",
+      "filepath": "uploads\\documents\\1742084654936-1-Introduction (1).pdf",
+      "dateUpload": "2025-03-16T00:24:14.985Z"
+    }
+  ],
+  "exercices": [
+    {
+      "id": "1",
+      "titre": "Exercice de mathématiques",
+      "description": "Résoudre les équations du second degré",
+      "classeId": "1",
+      "matiereId": "1739116103902",
+      "professeurId": "1",
+      "filepath": "uploads/exercices/exercice-math-1.pdf",
+      "dateCreation": "2025-02-19T10:00:00.000Z",
+      "dateLimit": "2025-02-26T23:59:59.000Z",
+      "status": "actif"
+    },
+    {
+      "id": "1742085083947",
+      "titre": "Comment traversée la route",
+      "description": "a rentdre le plus taux possible ?",
+      "classeId": "2",
+      "matiereId": "1742084613877",
+      "professeurId": "2",
+      "filepath": "uploads\\exercices\\1742085083920-1-Introduction (1).pdf",
+      "dateCreation": "2025-03-16T00:31:23.947Z",
+      "dateLimit": "2025-03-16T03:31:00.000Z",
+      "soumissions": []
+    }
+  ],
+  "permissions": [
+    {
+      "ressourceType": "cours",
+      "ressourceId": "1739505122441",
+      "classeId": "1",
+      "droits": [
+        "lecture"
+      ]
+    }
+  ],
+  "soumissions": [
+    {
+      "id": "1740670707945",
+      "exerciceId": "1",
+      "eleveId": "1",
+      "filepath": "uploads\\soumissions\\1740670707935-Components.docx",
+      "dateSoumission": "2025-02-27T15:38:27.945Z",
+      "status": "en_attente",
+      "note": 18,
+      "commentaire": "",
+      "professeurId": "1",
+      "dateNotation": "2025-03-16T16:35:05.508Z"
+    },
+    {
+      "id": "1740673403609",
+      "exerciceId": "1",
+      "eleveId": "1",
+      "filepath": "uploads\\soumissions\\1740673403545-Support_Maths_Cours_2_equations.pdf",
+      "dateSoumission": "2025-02-27T16:23:23.609Z",
+      "status": "en_attente",
+      "note": 15,
+      "commentaire": "",
+      "professeurId": "1",
+      "dateNotation": "2025-03-16T16:28:01.553Z"
+    },
+    {
+      "id": "1741793273949",
+      "exerciceId": "1",
+      "eleveId": "1",
+      "filepath": "uploads\\soumissions\\1741793273939-T2202A_2024.pdf",
+      "dateSoumission": "2025-03-12T15:27:53.949Z",
+      "status": "en_attente",
+      "note": 16,
+      "commentaire": "",
+      "dateNotation": "2025-03-16T16:22:55.390Z",
+      "professeurId": "1"
+    }
+  ],
+  "notes": [
+    {
+      "id": "1739121714652",
+      "eleveId": "1",
+      "matiereId": "1739116103902",
+      "note": 15,
+      "date": "2025-02-09T17:21:54.611Z",
+      "commentaire": "bien",
+      "dateModification": "2025-02-15T01:56:18.508Z"
+    },
+    {
+      "id": "1739547953570",
+      "eleveId": "2",
+      "matiereId": "1739116103902",
+      "note": 12,
+      "date": "2025-02-14T15:45:53.549Z",
+      "commentaire": "passable"
+    },
+    {
+      "id": "1739570901347",
+      "eleveId": "1",
+      "matiereId": "1739116103902",
+      "note": 8.5,
+      "date": "2025-02-14T22:08:21.316Z",
+      "commentaire": "mediocre"
+    },
+    {
+      "id": "1739584884788",
+      "eleveId": "1",
+      "matiereId": "1739505088671",
+      "note": 15.5,
+      "date": "2025-02-15T02:01:24.763Z",
+      "commentaire": "asser bien",
+      "dateModification": "2025-02-18T06:07:57.537Z"
+    },
+    {
+      "id": "1742083172388",
+      "eleveId": "1742012386916",
+      "matiereId": "1741821872312",
+      "professeurId": "2",
+      "note": 16,
+      "date": "2025-03-15T23:59:32.362Z",
+      "commentaire": "Bien"
+    },
+    {
+      "id": "1742142143411",
+      "eleveId": "1",
+      "exerciceId": "1",
+      "matiereId": "1739116103902",
+      "valeur": 18,
+      "commentaire": "",
+      "type": "exercice",
+      "date": "2025-03-16T16:35:05.508Z",
+      "professeurId": "1"
+    }
+  ],
+  "messages": [
+    {
+      "id": "1",
+      "senderId": "1",
+      "senderRole": "professeur",
+      "receiverId": "2",
+      "receiverRole": "eleve",
+      "subject": "À propos du devoir",
+      "content": "Bonjour, concernant le devoir...",
+      "date": "2024-02-20T10:30:00.000Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1741804372340",
+      "senderId": "1",
+      "senderRole": "eleve",
+      "receiverId": "2",
+      "receiverRole": "eleve",
+      "subject": "Travail",
+      "content": "Hello word",
+      "date": "2025-03-12T18:32:52.340Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1741805693244",
+      "senderId": "2",
+      "senderRole": "eleve",
+      "receiverId": "1",
+      "receiverRole": "eleve",
+      "subject": "Re: Travail",
+      "content": "\nYes bro hello word ",
+      "date": "2025-03-12T18:54:53.244Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1741905690659",
+      "senderId": "1",
+      "senderRole": "professeur",
+      "receiverId": "2",
+      "receiverRole": "professeur",
+      "subject": "test",
+      "content": "il sagit d'un test",
+      "date": "2025-03-13T22:41:30.659Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1741905748778",
+      "senderId": "1",
+      "senderRole": "professeur",
+      "receiverId": "2",
+      "receiverRole": "professeur",
+      "subject": "test 2",
+      "content": "il sgist de teste 2",
+      "date": "2025-03-13T22:42:28.778Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1741913670759",
+      "senderId": "1",
+      "senderRole": "professeur",
+      "receiverId": "2",
+      "receiverRole": "professeur",
+      "subject": "test",
+      "content": "hello word",
+      "date": "2025-03-14T00:54:30.759Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1742145023879",
+      "senderId": "1",
+      "senderRole": "admin",
+      "receiverId": "1742144465100",
+      "receiverRole": "professeur",
+      "subject": "Maintenance",
+      "content": "veuller vous diriger ver l'administrateur s'il vous plait",
+      "date": "2025-03-16T17:10:23.879Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1742146356638",
+      "senderId": "1742144465100",
+      "senderRole": "professeur",
+      "receiverId": "admin1",
+      "receiverRole": "admin",
+      "subject": "Re: Maintenance",
+      "content": "Je serai la sous peut",
+      "date": "2025-03-16T17:32:36.638Z",
+      "read": false,
+      "attachments": []
+    },
+    {
+      "id": "1742146447958",
+      "senderId": "1",
+      "senderRole": "admin",
+      "receiverId": "1742144465100",
+      "receiverRole": "professeur",
+      "subject": "Maintenance",
+      "content": "Le probleme sera resolu au plus tard demain",
+      "date": "2025-03-16T17:34:07.958Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1742146662763",
+      "senderId": "1742144465100",
+      "senderRole": "professeur",
+      "receiverId": "admin1",
+      "receiverRole": "admin",
+      "subject": "Re: Maintenance",
+      "content": "ok",
+      "date": "2025-03-16T17:37:42.763Z",
+      "read": false,
+      "attachments": []
+    },
+    {
+      "id": "1742147279464",
+      "senderId": "1742144465100",
+      "senderRole": "professeur",
+      "receiverId": "1",
+      "receiverRole": "admin",
+      "subject": "Re: Maintenance",
+      "content": "cela marche maintenant merci",
+      "date": "2025-03-16T17:47:59.464Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1742402796701",
+      "senderId": "2",
+      "senderRole": "professeur",
+      "receiverId": "1",
+      "receiverRole": "professeur",
+      "subject": "Teste de message ",
+      "content": "Hello pro",
+      "date": "2025-03-19T16:46:36.701Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1742403563044",
+      "senderId": "2",
+      "senderRole": "professeur",
+      "receiverId": "1",
+      "receiverRole": "professeur",
+      "subject": "hh",
+      "content": "hi",
+      "date": "2025-03-19T16:59:23.044Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1742404008153",
+      "senderId": "2",
+      "senderRole": "professeur",
+      "receiverId": "1",
+      "receiverRole": "professeur",
+      "subject": "sujet",
+      "content": "hello",
+      "date": "2025-03-19T17:06:48.153Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1742404344016",
+      "senderId": "2",
+      "senderRole": "professeur",
+      "receiverId": "1",
+      "receiverRole": "professeur",
+      "subject": "sujet",
+      "content": "hello",
+      "date": "2025-03-19T17:12:24.016Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1742404538732",
+      "senderId": "2",
+      "senderRole": "professeur",
+      "receiverId": "1",
+      "receiverRole": "professeur",
+      "subject": "sujet",
+      "content": "hello",
+      "date": "2025-03-19T17:15:38.732Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1742404855585",
+      "senderId": "2",
+      "senderRole": "professeur",
+      "receiverId": "1",
+      "receiverRole": "professeur",
+      "subject": "hello",
+      "content": "word",
+      "date": "2025-03-19T17:20:55.585Z",
+      "read": true,
+      "attachments": []
+    },
+    {
+      "id": "1742407106818",
+      "senderId": "2",
+      "senderRole": "professeur",
+      "receiverId": "1",
+      "receiverRole": "professeur",
+      "subject": "hh",
+      "content": "lioo",
+      "date": "2025-03-19T17:58:26.818Z",
+      "read": true,
+      "attachments": []
+    }
+  ],
+  "fraisScolarite": [
+    {
+      "id": "1741975798189",
+      "eleveId": "1",
+      "montant": 0,
+      "datePaiement": null,
+      "statut": "partiel",
+      "commentaire": "qq",
+      "dateCreation": "2025-03-14T18:09:58.189Z",
+      "dateModification": "2025-03-14T20:32:00.407Z",
+      "montantPaye": 200,
+      "montantTotal": 500
+    },
+    {
+      "id": "frais_2_1741993067314",
+      "eleveId": "2",
+      "montantTotal": 444,
+      "montantPaye": 444,
+      "statut": "complet",
+      "dateCreation": "2025-03-14T22:57:47.314Z",
+      "commentaire": "",
+      "dateModification": "2025-03-15T04:30:38.077Z"
+    },
+    {
+      "id": "frais_1742012386916_1742012390659",
+      "eleveId": "1742012386916",
+      "montantTotal": 7000,
+      "montantPaye": 4000,
+      "statut": "partiel",
+      "dateCreation": "2025-03-15T04:19:50.659Z",
+      "commentaire": "",
+      "dateModification": "2025-03-15T04:28:49.784Z"
+    }
+  ],
+  "adminLogs": [
+    {
+      "id": "1742072680366",
+      "adminId": "1",
+      "action": "assign_class",
+      "details": {
+        "professeurId": "2",
+        "classeId": "2",
+        "professeurNom": "Jane Smith",
+        "classeNom": "Classe B"
+      },
+      "date": "2025-03-15T21:04:40.368Z"
+    },
+    {
+      "id": "1742076359241",
+      "adminId": "1",
+      "action": "assign_class",
+      "details": {
+        "professeurId": "2",
+        "classeId": "2",
+        "professeurNom": "Jane Smith",
+        "classeNom": "Classe B"
+      },
+      "date": "2025-03-15T22:05:59.241Z"
+    },
+    {
+      "id": "1742076407548",
+      "adminId": "1",
+      "action": "assign_class",
+      "details": {
+        "professeurId": "1",
+        "classeId": "2",
+        "professeurNom": "John Doe",
+        "classeNom": "Classe B"
+      },
+      "date": "2025-03-15T22:06:47.548Z"
+    },
+    {
+      "id": "1742076411145",
+      "adminId": "1",
+      "action": "assign_class",
+      "details": {
+        "professeurId": "1",
+        "classeId": "1742076396894",
+        "professeurNom": "John Doe",
+        "classeNom": "Classe C"
+      },
+      "date": "2025-03-15T22:06:51.145Z"
+    },
+    {
+      "id": "1742083338573",
+      "adminId": "1",
+      "action": "assign_class",
+      "details": {
+        "professeurId": "2",
+        "classeId": "2",
+        "professeurNom": "Jane Smith",
+        "classeNom": "Classe B"
+      },
+      "date": "2025-03-16T00:02:18.573Z"
+    },
+    {
+      "id": "1742147208091",
+      "adminId": "1",
+      "action": "assign_class",
+      "details": {
+        "professeurId": "1742144465100",
+        "classeId": "1",
+        "professeurNom": "cherif",
+        "classeNom": "Classe A"
+      },
+      "date": "2025-03-16T17:46:48.091Z"
+    },
+    {
+      "id": "1742147213631",
+      "adminId": "1",
+      "action": "assign_class",
+      "details": {
+        "professeurId": "1742144465100",
+        "classeId": "1742076396894",
+        "professeurNom": "cherif",
+        "classeNom": "Classe C"
+      },
+      "date": "2025-03-16T17:46:53.631Z"
+    }
+  ]
+}

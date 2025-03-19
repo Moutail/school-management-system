@@ -1,0 +1,25 @@
+# Node
+node_modules/
+npm-debug.log
+.env
+
+# Build
+dist/
+build/
+
+# Logs
+logs/
+*.log
+
+# Système d'exploitation
+.DS_Store
+Thumbs.db
+
+# MongoDB
+data/db/
+
+# Autres
+.vscode/
+.idea/
+*.zip
+*.tar.gz
