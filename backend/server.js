@@ -8,29 +8,41 @@ const dbController = require('./db/dbController');
 
 const app = express();
 const server = http.createServer(app);
-// Configurer CORS pour le déploiement
+
+// Configuration CORS unifiée pour le déploiement
+const allowedOrigins = process.env.NODE_ENV === 'production' 
+  ? ['https://school-management-system-dun-nu.vercel.app']
+  : ['http://localhost:5173', 'http://localhost:3000'];
+
+// Configurer CORS une seule fois
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL || 'school-management-system-dun-nu.vercel.app'] 
-    : ['http://localhost:5173', 'http://localhost:3000'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 // Configuration de Socket.IO avec CORS
 const io = socketIO(server, {
   cors: {
-    origin: process.env.NODE_ENV === 'production' 
-      ? [process.env.FRONTEND_URL || 'school-management-system-dun-nu.vercel.app'] 
-      : ['http://localhost:5173', 'http://localhost:3000'],
+    origin: allowedOrigins,
     methods: ['GET', 'POST'],
     credentials: true
   }
 });
 
-// Middleware
-app.use(cors());
+// Middleware JSON
 app.use(express.json());
+
+// Route de santé pour tester l'API
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    message: 'API is running',
+    environment: process.env.NODE_ENV || 'development',
+    timestamp: new Date().toISOString()
+  });
+});
 
 // Création des dossiers d'upload
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -60,13 +72,11 @@ const settingsRoutes = require('./routes/settings.routes');
 const messageRoutes = require('./routes/message.routes');
 const parentRoutes = require('./routes/parent.routes');
 const fraisRoutes = require('./routes/frais.routes');
-app.use('/api/frais', fraisRoutes);
 
-
-// Socket.IO configuration
+// Configuration Socket.IO
 require('./socket')(io);
 
-// Use routes
+// Utilisation des routes
 app.use('/api/professeurs', professeurRoutes);
 app.use('/api/classes', classeRoutes);
 app.use('/api/cours', coursRoutes);
@@ -80,8 +90,8 @@ app.use('/api/admin/settings', settingsRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/parents', parentRoutes);
 app.use('/api/frais', fraisRoutes);
-app.use('/api/frais', fraisRoutes);
 app.use('/api/admins', adminRoutes);
+
 // Middleware de validation JSON
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
@@ -100,7 +110,15 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
+// Gestionnaire pour toutes les autres routes inconnues
+app.use('*', (req, res) => {
+  res.status(404).json({ 
+    message: 'Route non trouvée',
+    path: req.originalUrl
+  });
+});
+
+const PORT = process.env.PORT || 8080;
 server.listen(PORT, async () => {
   try {
     // Initialiser la base de données
