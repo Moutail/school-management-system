@@ -21,7 +21,7 @@ app.use(cors({
 const io = socketIO(server, {
   cors: {
     origin: process.env.NODE_ENV === 'production' 
-      ? [process.env.FRONTEND_URL || 'https://votre-frontend.vercel.app'] 
+      ? [process.env.FRONTEND_URL || 'school-management-system-dun-nu.vercel.app'] 
       : ['http://localhost:5173', 'http://localhost:3000'],
     methods: ['GET', 'POST'],
     credentials: true
