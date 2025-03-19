@@ -231,30 +231,41 @@ async init() {
   // Méthodes d'accès aux données qui fonctionnent dans les deux modes
   // Dans dbController.js
 async getAll(collection) {
-    await this.init();
-    
-    // Collections qui marchent bien en mode MongoDB
-    const mongoCandidates = ['settings', 'admins', 'professeurs'];
-    
-    // Collections qui marchent mieux en JSON pour le moment
-    const jsonCandidates = ['messages', 'cours'];
-    
-    if (!this.jsonMode && mongoCandidates.includes(collection)) {
-      try {
-        return await db.getAll(collection);
-      } catch (error) {
-        console.warn(`Erreur MongoDB pour ${collection}, fallback à JSON:`, error);
-      }
+  await this.init();
+  
+  // Collections qui marchent bien en mode MongoDB
+  const mongoCandidates = ['settings', 'admins', 'professeurs'];
+  
+  // Collections qui marchent mieux en JSON pour le moment
+  const jsonCandidates = ['messages', 'cours'];
+  
+  if (!this.jsonMode && mongoCandidates.includes(collection)) {
+    try {
+      return await db.getAll(collection);
+    } catch (error) {
+      console.warn(`Erreur MongoDB pour ${collection}, fallback à JSON:`, error);
     }
-    
-    // Utiliser JSON pour certaines collections ou en cas d'erreur MongoDB
-    if (this.jsonMode || jsonCandidates.includes(collection)) {
-      return this.jsonData[collection] || [];
-    }
-    
-    // Par défaut, utiliser MongoDB
-    return await db.getAll(collection);
   }
+  
+  // Utiliser JSON pour certaines collections ou en cas d'erreur MongoDB
+  if (this.jsonMode || jsonCandidates.includes(collection)) {
+    // Vérifier si la collection existe dans les données JSON
+    if (this.jsonData && this.jsonData[collection]) {
+      return this.jsonData[collection];
+    } else {
+      console.warn(`Collection ${collection} non trouvée dans le mode JSON, retour tableau vide`);
+      return [];
+    }
+  }
+  
+  // Par défaut, utiliser MongoDB
+  try {
+    return await db.getAll(collection);
+  } catch (error) {
+    console.error(`Erreur lors de la récupération de ${collection} depuis MongoDB:`, error);
+    return []; // Retourner un tableau vide en cas d'erreur
+  }
+}
 
   async getById(collection, id) {
     await this.init();
