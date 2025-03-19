@@ -11,7 +11,7 @@ const server = http.createServer(app);
 // Configurer CORS pour le déploiement
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL || 'https://votre-frontend.vercel.app'] 
+    ? [process.env.FRONTEND_URL || 'school-management-system-dun-nu.vercel.app'] 
     : ['http://localhost:5173', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
