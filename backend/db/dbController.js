@@ -16,6 +16,31 @@ class DbController {
     this.jsonData = null;
   }
 
+
+  async getCours(classeId) {
+  await this.init();
+  
+  try {
+    // Toujours essayer d'utiliser les données JSON pour les cours
+    if (this.jsonData && this.jsonData.cours) {
+      if (classeId) {
+        return this.jsonData.cours.filter(c => c.classeId === classeId);
+      }
+      return this.jsonData.cours;
+    }
+    
+    // Si les cours n'existent pas dans JSON et qu'on est en mode MongoDB
+    if (!this.jsonMode) {
+      return await db.find('cours', classeId ? { classeId } : {});
+    }
+    
+    // Dernier recours, retourner un tableau vide
+    return [];
+  } catch (error) {
+    console.error('Erreur lors de la récupération des cours:', error);
+    return [];
+  }
+}
 // Modification de la méthode init dans dbController.js
 async init() {
   if (this.initialized) return;
