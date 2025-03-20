@@ -5,7 +5,7 @@ const fs = require('fs').promises;
 
 // Chemin vers le fichier JSON de sauvegarde
 const JSON_FILE_PATH = process.env.NODE_ENV === 'production' 
-  ? path.join(__dirname, '../data/db.json')
+  ? path.join(__dirname, '../db.json')
   : path.join(__dirname, '../db.json');
 
 // Classe pour gérer l'accès à la base de données
