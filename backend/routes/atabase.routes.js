@@ -1,9 +1,8 @@
-// routes/migration.routes.js
+// routes/database.routes.js
 const express = require('express');
 const router = express.Router();
 const dbController = require('../db/dbController');
 
-// Route pour la migration
 router.post('/migrate', async (req, res) => {
   try {
     const { collection } = req.query;
