@@ -120,23 +120,6 @@ app.use('*', (req, res) => {
   });
 });
 
-app.post('/api/db/migrate', async (req, res) => {
-  try {
-    const { collection } = req.query;
-    
-    if (collection) {
-      const result = await dbController.migrateSpecificCollection(collection);
-      return res.json({ success: result, collection });
-    }
-    
-    // Migration complète
-    const result = await dbController.migrateFromJson();
-    res.json({ success: true, result });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
-
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, async () => {
   try {
