@@ -72,6 +72,7 @@ const settingsRoutes = require('./routes/settings.routes');
 const messageRoutes = require('./routes/message.routes');
 const parentRoutes = require('./routes/parent.routes');
 const fraisRoutes = require('./routes/frais.routes');
+const databaseRoutes = require('./routes/database.routes');
 
 // Configuration Socket.IO
 require('./socket')(io);
@@ -91,6 +92,7 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/parents', parentRoutes);
 app.use('/api/frais', fraisRoutes);
 app.use('/api/admins', adminRoutes);
+app.use('/api/database', databaseRoutes);
 
 // Middleware de validation JSON
 app.use((err, req, res, next) => {
@@ -116,6 +118,23 @@ app.use('*', (req, res) => {
     message: 'Route non trouvée',
     path: req.originalUrl
   });
+});
+
+app.post('/api/db/migrate', async (req, res) => {
+  try {
+    const { collection } = req.query;
+    
+    if (collection) {
+      const result = await dbController.migrateSpecificCollection(collection);
+      return res.json({ success: result, collection });
+    }
+    
+    // Migration complète
+    const result = await dbController.migrateFromJson();
+    res.json({ success: true, result });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 const PORT = process.env.PORT || 8080;
