@@ -1,6 +1,6 @@
 // src/services/api.js
 import { API_URL } from '../config/api.config';
-
+import { fetchWithRetry } from '../utils/fetchUtils';
 
 //service eleve 
 export const fetchEleves = async () => {
