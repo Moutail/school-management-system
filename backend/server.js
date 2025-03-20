@@ -15,17 +15,17 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
   : ['http://localhost:5173', 'http://localhost:3000'];
 
 // Configurer CORS une seule fois
+// Configuration CORS plus permissive
 app.use(cors({
-  origin: allowedOrigins,
+  origin: '*',  // Permet toutes les origines en développement
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Configuration de Socket.IO avec CORS
+// Pour Socket.IO
 const io = socketIO(server, {
   cors: {
-    origin: allowedOrigins,
+    origin: '*',  // Permet toutes les origines
     methods: ['GET', 'POST'],
     credentials: true
   }
