@@ -74,6 +74,35 @@ async init() {
     await this.fallbackToJson();
   }
 }
+
+  // Dans db/dbController.js, ajoutez cette fonction
+async migrateSpecificCollection(collectionName) {
+  try {
+    console.log(`Migration spécifique de la collection ${collectionName}...`);
+    
+    // Lire les données JSON
+    const jsonData = JSON.parse(await fs.readFile(JSON_FILE_PATH, 'utf8'));
+    
+    if (jsonData[collectionName] && jsonData[collectionName].length > 0) {
+      console.log(`Migration de ${jsonData[collectionName].length} éléments...`);
+      
+      // Vider la collection existante
+      await db.collections[collectionName].deleteMany({});
+      
+      // Insérer tous les éléments
+      await db.collections[collectionName].insertMany(jsonData[collectionName]);
+      
+      console.log(`Migration de ${collectionName} terminée`);
+      return true;
+    } else {
+      console.log(`Aucune donnée trouvée pour ${collectionName}`);
+      return false;
+    }
+  } catch (error) {
+    console.error(`Erreur lors de la migration de ${collectionName}:`, error);
+    return false;
+  }
+}
   
   // Méthode spéciale pour les settings - toujours utiliser MongoDB
   async getSettings() {
