@@ -123,6 +123,7 @@ server.listen(PORT, async () => {
   try {
     // Initialiser la base de données
     await dbController.init();
+    await dbController.migrateSpecificCollection('cours');
     console.log(`Serveur démarré sur le port ${PORT} en mode ${process.env.NODE_ENV || 'development'}`);
   } catch (error) {
     console.error('Erreur lors du démarrage du serveur:', error);
