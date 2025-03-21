@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { UserPlus, RefreshCw, Edit, UserX, Lock } from 'lucide-react';
 import AdminCreationForm from './AdminCreationForm';
 import AdminEditForm from './AdminEditForm';
-
+import { API_URL } from '../../config/api.config';
 function AdminManagement() {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +25,7 @@ function AdminManagement() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`http://localhost:5000/api/admin?userId=${userId}&userRole=${userRole}`);
+      const response = await fetch(`${API_URL}/api/admin?userId=${userId}&userRole=${userRole}`);
       
       if (!response.ok) {
         throw new Error('Erreur lors du chargement des administrateurs');
@@ -46,7 +46,7 @@ function AdminManagement() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`http://localhost:5000/api/admin/check-primary?userId=${userId}&userRole=${userRole}`);
+      const response = await fetch(`${API_URL}/api/admin/check-primary?userId=${userId}&userRole=${userRole}`);
       
       if (!response.ok) {
         throw new Error('Erreur lors de la vérification des droits');
@@ -80,7 +80,7 @@ function AdminManagement() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`http://localhost:5000/api/admin/${adminId}/deactivate?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/api/admin/${adminId}/deactivate?userId=${userId}&userRole=${userRole}`, {
         method: 'PUT'
       });
       
@@ -105,7 +105,7 @@ function AdminManagement() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`http://localhost:5000/api/admin/reset-password/admin/${adminId}?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/api/admin/reset-password/admin/${adminId}?userId=${userId}&userRole=${userRole}`, {
         method: 'POST'
       });
       
