@@ -665,8 +665,8 @@ function ExercicesGestion() {
 
       {/* Modal d'upload */}
       {showUploadModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-2xl w-full shadow-xl">
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl max-w-2xl w-full shadow-xl my-8">
             <div className="flex justify-between items-center p-6 border-b border-gray-100">
               <h2 className="text-xl font-bold text-gray-900">
                 {editingExerciceId ? 'Modifier l\'exercice' : 'Nouvel Exercice'}
@@ -679,8 +679,8 @@ function ExercicesGestion() {
               </button>
             </div>
             
-            <form onSubmit={handleSubmitExercice} className="p-6">
-              <div className="space-y-5">
+            <div className="p-6 max-h-[70vh] overflow-y-auto">
+              <form onSubmit={handleSubmitExercice} className="space-y-5">
                 {/* Sélection de la classe */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Classe *</label>
@@ -741,7 +741,7 @@ function ExercicesGestion() {
                     value={newExercice.description}
                     onChange={(e) => setNewExercice({...newExercice, description: e.target.value})}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    rows="4"
+                    rows="3"
                     placeholder="Description détaillée de l'exercice (optionnelle)"
                   />
                 </div>
@@ -764,9 +764,9 @@ function ExercicesGestion() {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Fichier {!editingExerciceId ? "*" : ""}
-                    {editingExerciceId && "(La mise à jour du fichier n'est pas encore prise en charge)"}
+                    {editingExerciceId && " (La mise à jour du fichier n'est pas encore prise en charge)"}
                   </label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-blue-400 transition-colors">
+                  <div className="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center cursor-pointer hover:border-blue-400 transition-colors">
                     <input
                       type="file"
                       onChange={(e) => setNewExercice({...newExercice, file: e.target.files[0]})}
@@ -777,42 +777,42 @@ function ExercicesGestion() {
                     <label htmlFor="file-upload" className="cursor-pointer">
                       {newExercice.file ? (
                         <div className="flex flex-col items-center">
-                          <div className="bg-blue-100 p-3 rounded-full mb-2">
-                            <FileText className="w-6 h-6 text-blue-600" />
+                          <div className="bg-blue-100 p-2 rounded-full mb-2">
+                            <FileText className="w-5 h-5 text-blue-600" />
                           </div>
-                          <p className="text-blue-700 font-medium">{newExercice.file.name}</p>
-                          <p className="text-gray-500 text-sm mt-1">{(newExercice.file.size / 1024 / 1024).toFixed(2)} MB</p>
+                          <p className="text-blue-700 font-medium text-sm">{newExercice.file.name}</p>
+                          <p className="text-gray-500 text-xs mt-1">{(newExercice.file.size / 1024 / 1024).toFixed(2)} MB</p>
                         </div>
                       ) : (
                         <div className="flex flex-col items-center">
-                          <div className="bg-gray-100 p-3 rounded-full mb-3">
-                            <Upload className="w-6 h-6 text-gray-500" />
+                          <div className="bg-gray-100 p-2 rounded-full mb-2">
+                            <Upload className="w-5 h-5 text-gray-500" />
                           </div>
-                          <p className="text-gray-700 font-medium">Cliquez pour choisir un fichier</p>
-                          <p className="text-gray-500 text-sm mt-1">ou glissez-déposez ici</p>
+                          <p className="text-gray-700 font-medium text-sm">Cliquez pour choisir un fichier</p>
+                          <p className="text-gray-500 text-xs mt-1">ou glissez-déposez ici</p>
                         </div>
                       )}
                     </label>
                   </div>
                 </div>
-              </div>
 
-              <div className="mt-8 flex justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={() => setShowUploadModal(false)}
-                  className="px-5 py-2.5 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 font-medium transition-colors"
-                >
-                  Annuler
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 font-medium shadow-sm transition-colors"
-                >
-                  {editingExerciceId ? 'Mettre à jour' : 'Créer l\'exercice'}
-                </button>
-              </div>
-            </form>
+                <div className="pt-4 flex justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowUploadModal(false)}
+                    className="px-4 py-2 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 font-medium transition-colors"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 font-medium shadow-sm transition-colors"
+                  >
+                    {editingExerciceId ? 'Mettre à jour' : 'Créer l\'exercice'}
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}
