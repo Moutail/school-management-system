@@ -5,10 +5,11 @@ import {
   BookOpen, Users, FileText, GraduationCap, Book,
   Activity, Search, Calendar, 
   CheckCircle,
-  Mail,Info, ChevronRight, Plus,
+  Mail, Info, ChevronRight, Plus,
   ListChecks, 
   Download,
-  AlertCircle
+  AlertCircle,
+  X
 } from 'lucide-react';
 
 import { 
@@ -17,6 +18,12 @@ import {
   getElevesForClasse,
   getCoursForClasse
 } from '../../services/api';
+import ExerciceForm from '../../components/ExerciceForm';
+
+// Import des composants personnalisés
+import NoteForm from '../../components/NoteForm';
+import CoursUpload from '../../components/CoursUpload';
+import MatiereForm from '../../components/MatiereForm';
 
 function ProfesseurDashboard() {
   const navigate = useNavigate();
@@ -39,6 +46,14 @@ function ProfesseurDashboard() {
   const [searchTerm, setSearchTerm] = useState('');
   const [recentActivity, setRecentActivity] = useState([]);
   const [isLoadingSection, setIsLoadingSection] = useState(false);
+  
+  // États pour les composants intégrés
+  const [selectedMatiere, setSelectedMatiere] = useState(null);
+  const [showAddMatiereForm, setShowAddMatiereForm] = useState(false);
+  const [showAddCoursForm, setShowAddCoursForm] = useState(false);
+  const [showAddNoteForm, setShowAddNoteForm] = useState(false);
+  const [showAddExerciceForm, setShowAddExerciceForm] = useState(false);
+
 
   useEffect(() => {
     const professeurId = localStorage.getItem('userId');
@@ -194,6 +209,42 @@ function ProfesseurDashboard() {
     fetchClasseData();
   }, [selectedClasse]);
 
+  const handleMatiereChange = (matiereId) => {
+    setSelectedMatiere(matiereId);
+  };
+
+  const handleMatieresUpdate = async () => {
+    const professeurId = localStorage.getItem('userId');
+    const matieresResponse = await getMatieresForProfesseur(professeurId);
+    setMatieres(matieresResponse || []);
+    
+    // Mettre à jour les statistiques
+    setStats(prev => ({
+      ...prev,
+      totalMatieres: matieresResponse.reduce((total, group) => total + (group.matieres?.length || 0), 0)
+    }));
+    
+    // Fermer le formulaire après mise à jour
+    setShowAddMatiereForm(false);
+  };
+
+  const handleCoursUploadSuccess = async () => {
+    // Recharger les cours pour la classe sélectionnée
+    const coursResponse = await getCoursForClasse(selectedClasse);
+    const coursData = Array.isArray(coursResponse) ? coursResponse : 
+                      coursResponse?.cours || [];
+    setCours(coursData);
+    
+    // Mettre à jour le compteur de cours
+    setStats(prev => ({
+      ...prev,
+      coursEnLigne: prev.coursEnLigne + 1
+    }));
+    
+    // Fermer le formulaire après upload
+    setShowAddCoursForm(false);
+  };
+
   const getMatieresForClasse = (classeId) => {
     const classeGroup = matieres.find(group => group.classeId === classeId);
     return classeGroup?.matieres || [];
@@ -251,6 +302,26 @@ function ProfesseurDashboard() {
   const sortedCours = [...cours].sort((a, b) => 
     new Date(b.dateUpload) - new Date(a.dateUpload)
   );
+
+  // Fonction pour basculer les formulaires
+  const toggleSection = (section) => {
+    // Fermer tous les formulaires
+    setShowAddMatiereForm(false);
+    setShowAddCoursForm(false);
+    setShowAddNoteForm(false);
+    
+    if (section === 'exercice') {
+      setShowAddExerciceForm(true);
+    }
+    // Ouvrir le formulaire demandé
+    if (section === 'matiere') {
+      setShowAddMatiereForm(true);
+    } else if (section === 'cours') {
+      setShowAddCoursForm(true);
+    } else if (section === 'note') {
+      setShowAddNoteForm(true);
+    }
+  };
 
   if (loading) {
     return (
@@ -418,6 +489,16 @@ function ProfesseurDashboard() {
             >
               Exercices
             </button>
+            <button
+              onClick={() => setActiveTab('notes')}
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+                activeTab === 'notes' 
+                  ? 'bg-blue-100 text-blue-700' 
+                  : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              Notes
+            </button>
           </div>
         </div>
         
@@ -478,6 +559,36 @@ function ProfesseurDashboard() {
                 </button>
               </div>
             )}
+
+            {/* Boutons d'actions rapides */}
+            {selectedClasse && (
+              <div className="mt-6 pt-6 border-t border-gray-100">
+                <h3 className="text-sm font-medium text-gray-700 mb-3">Actions rapides</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => toggleSection('cours')}
+                    className="p-3 bg-blue-50 rounded-xl text-blue-600 text-sm font-medium hover:bg-blue-100 transition-colors flex items-center justify-center gap-1"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Ajouter un cours
+                  </button>
+                  <button
+                    onClick={() => toggleSection('matiere')}
+                    className="p-3 bg-purple-50 rounded-xl text-purple-600 text-sm font-medium hover:bg-purple-100 transition-colors flex items-center justify-center gap-1"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Ajouter une matière
+                  </button>
+                  <button
+                    onClick={() => toggleSection('note')}
+                    className="p-3 bg-green-50 rounded-xl text-green-600 text-sm font-medium hover:bg-green-100 transition-colors flex items-center justify-center gap-1 col-span-2"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Ajouter des notes
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
           
           {/* Colonne centrale (contenu principal) */}
@@ -529,6 +640,78 @@ function ProfesseurDashboard() {
                     <p className="text-xs text-gray-400 mt-1">Vos activités apparaîtront ici</p>
                   </div>
                 )}
+              </div>
+            )}
+            
+            {/* Section de formulaire dynamique basée sur la sélection */}
+            {selectedClasse && showAddMatiereForm && (
+              <div className="mb-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-lg font-bold text-gray-900 flex items-center">
+                    <Book className="w-5 h-5 mr-2 text-purple-600" />
+                    Ajouter une nouvelle matière
+                  </h2>
+                  <button
+                    onClick={() => setShowAddMatiereForm(false)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <MatiereForm 
+                  classeId={selectedClasse} 
+                  onMatiereCreated={handleMatieresUpdate} 
+                />
+              </div>
+            )}
+
+            {selectedClasse && showAddCoursForm && (
+              <div className="mb-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-lg font-bold text-gray-900 flex items-center">
+                    <FileText className="w-5 h-5 mr-2 text-blue-600" />
+                    Ajouter un nouveau cours
+                  </h2>
+                  <button
+                    onClick={() => setShowAddCoursForm(false)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <CoursUpload 
+                  classeId={selectedClasse} 
+                  matieres={getMatieresForClasse(selectedClasse)}
+                  selectedMatiere={selectedMatiere}
+                  onMatiereChange={handleMatiereChange}
+                  onSuccess={handleCoursUploadSuccess}
+                  onClose={() => setShowAddCoursForm(false)}
+                  onMatieresUpdate={handleMatieresUpdate}
+                />
+              </div>
+            )}
+
+            {selectedClasse && showAddNoteForm && (
+              <div className="mb-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-lg font-bold text-gray-900 flex items-center">
+                    <CheckCircle className="w-5 h-5 mr-2 text-green-600" />
+                    Ajouter des notes
+                  </h2>
+                  <button
+                    onClick={() => setShowAddNoteForm(false)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <NoteForm
+                  classeId={selectedClasse}
+                  eleves={eleves}
+                  matieres={matieres}
+                  selectedMatiere={selectedMatiere}
+                  onMatiereChange={handleMatiereChange}
+                />
               </div>
             )}
             
@@ -707,7 +890,7 @@ function ProfesseurDashboard() {
                     Mes cours
                   </h2>
                   <button
-                    onClick={() => navigate('/professeur/cours/ajouter')}
+                    onClick={() => toggleSection('cours')}
                     className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm"
                   >
                     <Plus className="w-4 h-4" />
@@ -777,7 +960,7 @@ function ProfesseurDashboard() {
                               Vous n&lsquo;avez pas encore ajouté de cours pour cette classe
                             </p>
                             <button
-                              onClick={() => navigate('/professeur/cours/ajouter')}
+                              onClick={() => toggleSection('cours')}
                               className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm"
                             >
                               Ajouter un cours
@@ -810,37 +993,121 @@ function ProfesseurDashboard() {
             )}
             
             {activeTab === 'exercices' && (
-              <div>
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-lg font-bold text-gray-900 flex items-center">
-                    <BookOpen className="w-5 h-5 mr-2 text-blue-600" />
-                    Exercices
-                  </h2>
-                  <button
-                    onClick={() => navigate('/professeur/exercices/ajouter')}
-                    className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm"
-                  >
-                    <Plus className="w-4 h-4" />
-                    Nouvel exercice
-                  </button>
+            <div>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-lg font-bold text-gray-900 flex items-center">
+                  <BookOpen className="w-5 h-5 mr-2 text-blue-600" />
+                  Exercices
+                </h2>
+                <button
+                  onClick={() => toggleSection('exercice')}
+                  className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm"
+                >
+                  <Plus className="w-4 h-4" />
+                  Nouvel exercice
+                </button>
+              </div>
+              
+              {selectedClasse && showAddExerciceForm && (
+                <div className="mb-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-lg font-bold text-gray-900 flex items-center">
+                      <BookOpen className="w-5 h-5 mr-2 text-indigo-600" />
+                      Ajouter un exercice
+                    </h2>
+                    <button
+                      onClick={() => setShowAddExerciceForm(false)}
+                      className="text-gray-500 hover:text-gray-700"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <ExerciceForm 
+                    classeId={selectedClasse} 
+                    matieres={getMatieresForClasse(selectedClasse)}
+                    selectedMatiere={selectedMatiere}
+                    onMatiereChange={handleMatiereChange}
+                    onSuccess={() => {
+                      setShowAddExerciceForm(false);
+                      // Mettre à jour les statistiques ou autres données
+                      setStats(prev => ({
+                        ...prev,
+                        exercices: prev.exercices + 1
+                      }));
+                    }}
+                    onClose={() => setShowAddExerciceForm(false)}
+                  />
                 </div>
-                
-                {/* Cette section serait remplie avec de vrais exercices */}
+              )}
+              
+              {!showAddExerciceForm && (
                 <div className="text-center py-10 bg-gray-50 rounded-xl">
                   <div className="bg-gray-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-3">
                     <BookOpen className="w-8 h-8 text-gray-400" />
                   </div>
-                  <p className="text-gray-500 font-medium">Accéder à vos exercices</p>
+                  <p className="text-gray-500 font-medium">Gérer vos exercices</p>
                   <p className="text-sm text-gray-400 mt-1 mb-4">
-                    Créez et gérez vos exercices pour vos élèves
+                    Créez et suivez les exercices pour vos élèves
                   </p>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <button
+                      onClick={() => toggleSection('exercice')}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm flex items-center justify-center gap-1 mx-auto"
+                    >
+                      <Plus className="w-4 h-4" />
+                      Ajouter un exercice
+                    </button>
+                    <button
+                      onClick={() => navigate('/professeur/exercices')}
+                      className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg text-sm flex items-center justify-center gap-1 mx-auto"
+                    >
+                      Voir tous les exercices
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+            {activeTab === 'notes' && (
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-lg font-bold text-gray-900 flex items-center">
+                    <CheckCircle className="w-5 h-5 mr-2 text-blue-600" />
+                    Notes
+                  </h2>
                   <button
-                    onClick={() => navigate('/professeur/exercices')}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm"
+                    onClick={() => toggleSection('note')}
+                    className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm"
                   >
-                    Voir tous les exercices
+                    <Plus className="w-4 h-4" />
+                    Ajouter des notes
                   </button>
                 </div>
+                
+                {selectedClasse ? (
+                  <div>
+                    {!showAddNoteForm && (
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() => toggleSection('note')}
+                          className="px-6 py-3 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition-colors flex items-center gap-2 font-medium"
+                        >
+                          <Plus className="w-5 h-5" />
+                          Cliquez ici pour ajouter des notes
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-center py-10 bg-gray-50 rounded-xl">
+                    <div className="bg-gray-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-3">
+                      <GraduationCap className="w-8 h-8 text-gray-400" />
+                    </div>
+                    <p className="text-gray-500 font-medium">Sélectionnez une classe</p>
+                    <p className="text-sm text-gray-400 mt-1">Choisissez une classe dans la liste pour gérer les notes</p>
+                  </div>
+                )}
               </div>
             )}
           </div>
