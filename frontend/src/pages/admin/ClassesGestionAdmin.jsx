@@ -1,7 +1,7 @@
 // pages/admin/ClassesGestion.jsx
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Users } from 'lucide-react';
-
+import { API_URL } from '../../config/api.config';
 function ClassesGestionAdmin() {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +23,7 @@ function ClassesGestionAdmin() {
       const userRole = localStorage.getItem('userRole');
       
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/api/classes?userId=${userId}&userRole=${userRole}`);
+      const response = await fetch(`${API_URL}/api/classes?userId=${userId}&userRole=${userRole}`);
       
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
@@ -46,7 +46,7 @@ function ClassesGestionAdmin() {
       const userRole = localStorage.getItem('userRole');
       
       // Créer l'URL avec les paramètres d'authentification
-      const url = `http://localhost:5000/api/classes?userId=${userId}&userRole=${userRole}`;
+      const url = `${API_URL}/api/classes?userId=${userId}&userRole=${userRole}`;
       
       const response = await fetch(url, {
         method: editingClass ? 'PUT' : 'POST',
@@ -78,7 +78,7 @@ function ClassesGestionAdmin() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`http://localhost:5000/api/classes/${classeId}?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/api/classes/${classeId}?userId=${userId}&userRole=${userRole}`, {
         method: 'DELETE',
       });
   
