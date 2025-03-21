@@ -705,7 +705,9 @@ function ProfesseurDashboard() {
                     <X className="w-5 h-5" />
                   </button>
                 </div>
+                {/* Assurez-vous que ce composant n'est rendu qu'une seule fois */}
                 <NoteForm
+                  key={`note-form-${selectedClasse}`} // Ajoutez une clé unique
                   classeId={selectedClasse}
                   eleves={eleves}
                   matieres={matieres}
