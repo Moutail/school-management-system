@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 import AdminCreationForm from './AdminCreationForm';
-
+import { API_URL } from '../../config/api.config';
 function AdminDashboard() {
     const [stats, setStats] = useState({
         totalProfesseurs: 0,
@@ -43,9 +43,9 @@ const handleAdminCreated = (newAdmin) => {
         const authParams = `?userId=${userId}&userRole=${userRole}`;
         
         const [statsRes, professeursRes, classesRes] = await Promise.all([
-          fetch(`http://localhost:5000/api/admin/system-stats${authParams}`),
-          fetch(`http://localhost:5000/api/professeurs${authParams}`),
-          fetch(`http://localhost:5000/api/classes${authParams}`)
+          fetch(`${API_URL}/api/admin/system-stats${authParams}`),
+          fetch(`${API_URL}/api/professeurs${authParams}`),
+          fetch(`${API_URL}/api/classes${authParams}`)
         ]);
     
         // Vérifier les erreurs pour chaque requête
@@ -86,7 +86,7 @@ const handleAdminCreated = (newAdmin) => {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`http://localhost:5000/api/admin/retirer-classe/${professeurId}/${classeId}?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/api/admin/retirer-classe/${professeurId}/${classeId}?userId=${userId}&userRole=${userRole}`, {
         method: 'DELETE'
       });
   
@@ -109,7 +109,7 @@ const handleAdminCreated = (newAdmin) => {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`http://localhost:5000/api/admin/assigner-classe?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/api/admin/assigner-classe?userId=${userId}&userRole=${userRole}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ const handleAdminCreated = (newAdmin) => {
       const userRole = localStorage.getItem('userRole');
       
       const response = await fetch(
-        `http://localhost:5000/api/admin/reset-password/${userType}/${userId}?userId=${adminId}&userRole=${userRole}`,
+        `${API_URL}/api/admin/reset-password/${userType}/${userId}?userId=${adminId}&userRole=${userRole}`,
         { method: 'POST' }
       );
   
