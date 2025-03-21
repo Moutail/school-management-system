@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { X, Save, RefreshCw } from 'lucide-react';
+import { API_URL } from '../../config/api.config';
 
 function AdminEditForm({ admin, onClose, onSuccess }) {
   const [formData, setFormData] = useState({
@@ -38,7 +39,7 @@ function AdminEditForm({ admin, onClose, onSuccess }) {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`http://localhost:5000/api/admin/${admin.id}?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/api/admin/${admin.id}?userId=${userId}&userRole=${userRole}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
