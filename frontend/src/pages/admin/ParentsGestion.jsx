@@ -1,6 +1,7 @@
 // pages/admin/ParentsGestion.jsx
 import { useState, useEffect } from 'react';
 import { Search, UserPlus, Save, X, Users } from 'lucide-react';
+import { API_URL } from '../../config/api.config';
 
 function ParentsGestion() {
   const [parents, setParents] = useState([]);
@@ -16,8 +17,8 @@ function ParentsGestion() {
     const fetchData = async () => {
       try {
         const [parentsRes, elevesRes] = await Promise.all([
-          fetch('http://localhost:5000/api/parents'),
-          fetch('http://localhost:5000/api/eleves')
+          fetch(`${API_URL}/api/parents`),
+          fetch(`${API_URL}/api/eleves`)
         ]);
 
         if (parentsRes.ok && elevesRes.ok) {
@@ -59,7 +60,7 @@ function ParentsGestion() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`http://localhost:5000/api/admin/parent/${selectedParent.id}/assign-students?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/api/admin/parent/${selectedParent.id}/assign-students?userId=${userId}&userRole=${userRole}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
