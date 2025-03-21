@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { X, UserPlus } from 'lucide-react';
-
+import { API_URL } from '../../config/api.config';
 function AdminCreationForm({ onClose, onSuccess }) {
   const [formData, setFormData] = useState({
     nom: '',
@@ -30,7 +30,7 @@ function AdminCreationForm({ onClose, onSuccess }) {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`http://localhost:5000/api/admin/create?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/api/admin/create?userId=${userId}&userRole=${userRole}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
