@@ -7,6 +7,7 @@ import {
   Filter, Book, Search,
   ChevronDown, Grid3X3, List, Archive
 } from 'lucide-react';
+import { API_URL } from '../../config/api.config';
 
 function ParentCours() {
   const [cours, setCours] = useState([]);
@@ -28,15 +29,15 @@ function ParentCours() {
         const headers = { 'Authorization': `Bearer ${token}` };
   
         // Récupérer les infos de l'élève
-        const eleveRes = await fetch(`http://localhost:5000/api/eleves/${eleveId}`, { headers });
+        const eleveRes = await fetch(`${API_URL}/eleves/${eleveId}`, { headers });
         const eleveData = await eleveRes.json();
         setEleve(eleveData);
   
         // Récupérer les cours et exercices de la classe de l'élève
         if (eleveData.classeId) {
           const [coursRes, exercicesRes] = await Promise.all([
-            fetch(`http://localhost:5000/api/cours/classe/${eleveData.classeId}?userId=${userId}&userRole=${userRole}`, { headers }),
-            fetch(`http://localhost:5000/api/exercices/classe/${eleveData.classeId}?eleveId=${eleveId}&userId=${userId}&userRole=${userRole}`, { headers })
+            fetch(`${API_URL}/cours/classe/${eleveData.classeId}?userId=${userId}&userRole=${userRole}`, { headers }),
+            fetch(`${API_URL}/exercices/classe/${eleveData.classeId}?eleveId=${eleveId}&userId=${userId}&userRole=${userRole}`, { headers })
           ]);
   
           if (coursRes.ok) {
