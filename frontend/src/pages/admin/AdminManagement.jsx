@@ -25,7 +25,7 @@ function AdminManagement() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`${API_URL}/api/admin?userId=${userId}&userRole=${userRole}`);
+      const response = await fetch(`${API_URL}/admin?userId=${userId}&userRole=${userRole}`);
       
       if (!response.ok) {
         throw new Error('Erreur lors du chargement des administrateurs');
@@ -46,7 +46,7 @@ function AdminManagement() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`${API_URL}/api/admin/check-primary?userId=${userId}&userRole=${userRole}`);
+      const response = await fetch(`${API_URL}/admin/check-primary?userId=${userId}&userRole=${userRole}`);
       
       if (!response.ok) {
         throw new Error('Erreur lors de la vérification des droits');
@@ -80,7 +80,7 @@ function AdminManagement() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`${API_URL}/api/admin/${adminId}/deactivate?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/admin/${adminId}/deactivate?userId=${userId}&userRole=${userRole}`, {
         method: 'PUT'
       });
       
@@ -105,7 +105,7 @@ function AdminManagement() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`${API_URL}/api/admin/reset-password/admin/${adminId}?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/admin/reset-password/admin/${adminId}?userId=${userId}&userRole=${userRole}`, {
         method: 'POST'
       });
       
