@@ -6,7 +6,7 @@ import {
   AlertCircle, Star, StarOff, Plus, Calendar, MessageSquare
 } from 'lucide-react';
 import io from 'socket.io-client';
-
+import { API_URL } from '../config/api.config';
 const Messagerie = () => {
   // États principaux
   const [messages, setMessages] = useState([]);
@@ -58,7 +58,7 @@ const Messagerie = () => {
     const fetchMessagesWithFallback = async () => {
       try {
         // Essayer de récupérer depuis l'API
-        const response = await fetch(`http://localhost:5000/api/messages/details/${currentUserId}/${currentUserRole}`);
+        const response = await fetch(`${API_URL}/messages/details/${currentUserId}/${currentUserRole}`);
         if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
         
         const data = await response.json();
@@ -89,7 +89,7 @@ const Messagerie = () => {
   // Initialisation de la socket
   useEffect(() => {
     // Créer la connexion socket
-    socketRef.current = io('http://localhost:5000');
+    socketRef.current = io('https://school-system-backend-ua7r.onrender.com');
     
     // Écouter les événements
     socketRef.current.on('connect', () => {
@@ -208,7 +208,7 @@ const Messagerie = () => {
   const fetchMessages = async () => {
     try {
       // Utiliser la route qui enrichit les messages avec les noms des utilisateurs
-      const response = await fetch(`http://localhost:5000/api/messages/details/${currentUserId}/${currentUserRole}`);
+      const response = await fetch(`${API_URL}/messages/details/${currentUserId}/${currentUserRole}`);
       if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
       
       const data = await response.json();
@@ -235,7 +235,7 @@ const Messagerie = () => {
       // Au lieu de Promise.all, faisons les requêtes une par une pour mieux identifier les problèmes
       try {
         console.log("Chargement des professeurs...");
-        const professeursRes = await fetch('http://localhost:5000/api/professeurs');
+        const professeursRes = await fetch(`${API_URL}/professeurs`);
         console.log("Réponse professeurs:", professeursRes.status);
         
         if (!professeursRes.ok) {
@@ -243,7 +243,7 @@ const Messagerie = () => {
         }
 
         console.log("Chargement des parents...");
-        const parentsRes = await fetch('http://localhost:5000/api/parents');
+        const parentsRes = await fetch(`${API_URL}/parents`);
         console.log("Réponse parents:", parentsRes.status);
         
         if (parentsRes.ok) {
@@ -278,7 +278,7 @@ const Messagerie = () => {
       
       try {
         console.log("Chargement des élèves...");
-        const elevesRes = await fetch('http://localhost:5000/api/eleves');
+        const elevesRes = await fetch(`${API_URL}/eleves`);
         console.log("Réponse élèves (status):", elevesRes.status);
         
         if (!elevesRes.ok) {
@@ -315,7 +315,7 @@ const Messagerie = () => {
         console.log("Chargement des admins...");
         
         // Essayez d'abord de charger depuis l'API
-        const adminsRes = await fetch('http://localhost:5000/api/admins/list');
+        const adminsRes = await fetch(`${API_URL}/api/admins/list`);
         console.log("Réponse admins:", adminsRes.status);
         
         if (adminsRes.ok) {
@@ -361,7 +361,7 @@ const Messagerie = () => {
 
   const fetchClasses = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/classes');
+      const response = await fetch(`${API_URL}/classes`);
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
       }
@@ -416,7 +416,7 @@ const Messagerie = () => {
         }
         
         // Pour les messages de classe, utilisez toujours l'API REST
-        const response = await fetch('http://localhost:5000/api/messages/class', {
+        const response = await fetch(`${API_URL}/api/messages/class`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -465,7 +465,7 @@ const Messagerie = () => {
   };
 
   const sendMessage = async (messageData) => {
-    const response = await fetch('http://localhost:5000/api/messages', {
+    const response = await fetch(`${API_URL}/messages`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(messageData),
@@ -491,8 +491,8 @@ const Messagerie = () => {
         }
         
         // Également utiliser l'API REST pour s'assurer que le changement est persistant
-        console.log("Envoi de requête à:", `http://localhost:5000/api/messages/${messageId}/read`);
-        const response = await fetch(`http://localhost:5000/api/messages/${messageId}/read`, {
+        console.log("Envoi de requête à:", ``${API_URL}/messages/${messageId}/read`);
+        const response = await fetch(`${API_URL}/messages/${messageId}/read`, {
             method: 'PUT'
         });
         
@@ -515,7 +515,7 @@ const Messagerie = () => {
     
     if (window.confirm('Voulez-vous vraiment supprimer ce message ?')) {
       try {
-        const response = await fetch(`http://localhost:5000/api/messages/${messageId}`, {
+        const response = await fetch(`${API_URL}/messages/${messageId}`, {
           method: 'DELETE'
         });
         
