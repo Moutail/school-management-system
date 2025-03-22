@@ -23,7 +23,7 @@ function ClassesGestionAdmin() {
       const userRole = localStorage.getItem('userRole');
       
       setLoading(true);
-      const response = await fetch(`${API_URL}/api/classes?userId=${userId}&userRole=${userRole}`);
+      const response = await fetch(`${API_URL}/classes?userId=${userId}&userRole=${userRole}`);
       
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
@@ -46,7 +46,7 @@ function ClassesGestionAdmin() {
       const userRole = localStorage.getItem('userRole');
       
       // Créer l'URL avec les paramètres d'authentification
-      const url = `${API_URL}/api/classes?userId=${userId}&userRole=${userRole}`;
+      const url = `${API_URL}/classes?userId=${userId}&userRole=${userRole}`;
       
       const response = await fetch(url, {
         method: editingClass ? 'PUT' : 'POST',
@@ -78,7 +78,7 @@ function ClassesGestionAdmin() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`${API_URL}/api/classes/${classeId}?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/classes/${classeId}?userId=${userId}&userRole=${userRole}`, {
         method: 'DELETE',
       });
   
