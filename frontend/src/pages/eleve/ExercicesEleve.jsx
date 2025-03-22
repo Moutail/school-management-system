@@ -6,6 +6,7 @@ import {
   Search, Filter, CheckCheck, Eye,
   ChevronDown, Clock4, Award, MessageSquare
 } from 'lucide-react';
+import { API_URL } from '../../config/api.config';
 
 function ExercicesEleve() {
   const [exercices, setExercices] = useState([]);
@@ -75,7 +76,7 @@ function ExercicesEleve() {
         }
             
         const response = await fetch(
-          `http://localhost:5000/api/exercices/classe/${classeId}?eleveId=${eleveId}&userId=${eleveId}&userRole=${userRole}`,
+          `${API_URL}/exercices/classe/${classeId}?eleveId=${eleveId}&userId=${eleveId}&userRole=${userRole}`,
           {
             headers: {
               'Authorization': `Bearer ${token}`
@@ -139,7 +140,7 @@ function ExercicesEleve() {
 
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:5000/api/exercices/soumettre', {
+      const response = await fetch(`${API_URL}/exercices/soumettre`, {
         method: 'POST',
         body: formData
       });
