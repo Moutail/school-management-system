@@ -6,6 +6,7 @@ import {
   Clock, ArrowLeft, FileText, Calendar,
   Download, CreditCard, Info, ArrowRight
 } from 'lucide-react';
+import { API_URL } from '../../config/api.config';
 
 function FraisScolarite() {
   const [frais, setFrais] = useState(null);
@@ -17,14 +18,14 @@ function FraisScolarite() {
     const fetchData = async () => {
       try {
         // Récupérer les infos de l'élève
-        const eleveRes = await fetch(`http://localhost:5000/api/eleves/${eleveId}`);
+        const eleveRes = await fetch(`${API_URL}/eleves/${eleveId}`);
         const eleveData = await eleveRes.json();
         setEleve(eleveData);
 
         // Récupérer les frais de scolarité
         const userId = localStorage.getItem('userId');
         const userRole = localStorage.getItem('userRole');
-        const fraisRes = await fetch(`http://localhost:5000/api/frais/eleve/${eleveId}/frais?userId=${userId}&userRole=${userRole}`);
+        const fraisRes = await fetch(`${API_URL}/frais/eleve/${eleveId}/frais?userId=${userId}&userRole=${userRole}`);
         const fraisData = await fraisRes.json();
         setFrais(fraisData);
       } catch (error) {
