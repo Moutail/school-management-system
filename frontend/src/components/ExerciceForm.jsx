@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { 
   BookOpen, Calendar, Check, AlertCircle, Upload, X 
 } from 'lucide-react';
+import { API_URL } from '../config/api.config';
 
 function ExerciceForm({ 
   classeId, 
@@ -42,7 +43,7 @@ function ExerciceForm({
     formData.append('professeurId', localStorage.getItem('userId'));
 
     try {
-      const response = await fetch('http://localhost:5000/api/exercices', {
+      const response = await fetch(`${API_URL}/exercices`, {
         method: 'POST',
         body: formData,
       });
