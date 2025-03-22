@@ -17,8 +17,8 @@ function ParentsGestion() {
     const fetchData = async () => {
       try {
         const [parentsRes, elevesRes] = await Promise.all([
-          fetch(`${API_URL}/api/parents`),
-          fetch(`${API_URL}/api/eleves`)
+          fetch(`${API_URL}/parents`),
+          fetch(`${API_URL}/eleves`)
         ]);
 
         if (parentsRes.ok && elevesRes.ok) {
@@ -60,7 +60,7 @@ function ParentsGestion() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`${API_URL}/api/admin/parent/${selectedParent.id}/assign-students?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/admin/parent/${selectedParent.id}/assign-students?userId=${userId}&userRole=${userRole}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
