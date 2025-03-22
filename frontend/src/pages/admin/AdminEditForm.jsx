@@ -39,7 +39,7 @@ function AdminEditForm({ admin, onClose, onSuccess }) {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`${API_URL}/api/admin/${admin.id}?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/admin/${admin.id}?userId=${userId}&userRole=${userRole}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
