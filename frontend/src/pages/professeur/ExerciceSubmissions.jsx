@@ -8,6 +8,7 @@ import {
   X,
   Edit2
 } from 'lucide-react';
+import { API_URL } from '../../config/api.config';
 
 function ExerciceSubmissions() {
   const { exerciceId } = useParams();
@@ -33,7 +34,7 @@ function ExerciceSubmissions() {
         const userRole = localStorage.getItem('userRole');
         
         // Récupérer les détails de l'exercice
-        const exerciceRes = await fetch(`http://localhost:5000/api/exercices/${exerciceId}?userId=${userId}&userRole=${userRole}`);
+        const exerciceRes = await fetch(`${API_URL}/exercices/${exerciceId}?userId=${userId}&userRole=${userRole}`);
         
         if (!exerciceRes.ok) {
           throw new Error(`Erreur lors de la récupération de l'exercice (${exerciceRes.status})`);
@@ -43,7 +44,7 @@ function ExerciceSubmissions() {
         setExercice(exerciceData);
         
         // Récupérer les soumissions
-        const submissionsRes = await fetch(`http://localhost:5000/api/exercices/soumissions/${exerciceId}?userId=${userId}&userRole=${userRole}`);
+        const submissionsRes = await fetch(`${API_URL}/exercices/soumissions/${exerciceId}?userId=${userId}&userRole=${userRole}`);
         
         if (!submissionsRes.ok) {
           throw new Error(`Erreur lors de la récupération des soumissions (${submissionsRes.status})`);
@@ -65,7 +66,7 @@ function ExerciceSubmissions() {
   const handleDownload = (id) => {
     const userId = localStorage.getItem('userId');
     const userRole = localStorage.getItem('userRole');
-    window.open(`http://localhost:5000/api/exercices/soumissions/${id}/download?userId=${userId}&userRole=${userRole}`, '_blank');
+    window.open(`${API_URL}/exercices/soumissions/${id}/download?userId=${userId}&userRole=${userRole}`, '_blank');
   };
   
   const openNoteModal = (submission) => {
@@ -91,7 +92,7 @@ function ExerciceSubmissions() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`http://localhost:5000/api/exercices/soumissions/${selectedSubmission.id}/noter?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/exercices/soumissions/${selectedSubmission.id}/noter?userId=${userId}&userRole=${userRole}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
