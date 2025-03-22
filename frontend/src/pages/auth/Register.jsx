@@ -27,7 +27,7 @@ const Register = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+        const API_URL = import.meta.env.VITE_API_URL || `${API_URL}/api`;
         const [classesRes, elevesRes] = await Promise.all([
           fetch(`${API_URL}/classes`),
           fetch(`${API_URL}/eleves`)
