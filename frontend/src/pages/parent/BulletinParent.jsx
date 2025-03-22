@@ -16,6 +16,7 @@ import {
   CheckCircle,
   Printer
 } from 'lucide-react';
+import { API_URL } from '../../config/api.config';
 
 function BulletinParent() {
   const [bulletinData, setBulletinData] = useState(null);
@@ -81,7 +82,7 @@ function BulletinParent() {
 
         // Charger les informations de l'élève
         const eleveResponse = await fetch(
-          `http://localhost:5000/api/eleves/${eleveId}?userId=${userId}&userRole=${userRole}`, 
+          `${API_URL}/eleves/${eleveId}?userId=${userId}&userRole=${userRole}`, 
           { headers }
         );
         
@@ -93,7 +94,7 @@ function BulletinParent() {
 
         // Charger les notes avec les paramètres parent
         const notesResponse = await fetch(
-          `http://localhost:5000/api/notes/eleve/${eleveId}?userId=${userId}&userRole=${userRole}`,
+          `${API_URL}/notes/eleve/${eleveId}?userId=${userId}&userRole=${userRole}`,
           { headers }
         );
         
