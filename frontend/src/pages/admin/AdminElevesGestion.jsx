@@ -28,8 +28,8 @@ function AdminElevesGestion() {
     const fetchData = async () => {
       try {
         const [elevesRes, classesRes] = await Promise.all([
-          fetch(`${API_URL}/api/eleves`),
-          fetch(`${API_URL}/api/classes`)
+          fetch(`${API_URL}/eleves`),
+          fetch(`${API_URL}/classes`)
         ]);
 
         const [elevesData, classesData] = await Promise.all([
