@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { getUnreadMessagesCount } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
+import { API_URL } from '../config/api.config';
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +54,7 @@ export default function Sidebar() {
       try {
         const userId = localStorage.getItem('userId');
         const response = await fetch(
-          `http://localhost:5000/api/admin/check-primary?userId=${userId}&userRole=${userRole}`
+          `${API_URL}/admin/check-primary?userId=${userId}&userRole=${userRole}`
         );
         
         if (response.ok) {
