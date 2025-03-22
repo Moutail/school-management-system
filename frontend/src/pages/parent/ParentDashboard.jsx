@@ -7,6 +7,7 @@ import {
   Calendar, Bell, CheckCircle, 
    AlertTriangle, TrendingUp
 } from 'lucide-react';
+import { API_URL } from '../../config/api.config';
 
 function ParentDashboard() {
   const [eleves, setEleves] = useState([]);
@@ -17,7 +18,7 @@ function ParentDashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/parents/${parentId}/eleves`);
+        const response = await fetch(`${API_URL}/parents/${parentId}/eleves`);
         const data = await response.json();
         setEleves(data);
         
