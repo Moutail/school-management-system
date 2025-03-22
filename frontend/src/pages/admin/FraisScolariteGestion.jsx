@@ -36,7 +36,7 @@ useEffect(() => {
         // Créer des promesses pour chaque élève
         const promises = eleves.map(async (eleve) => {
           try {
-            const response = await fetch(`${API_URL}/api/frais/eleve/${eleve.id}/frais?userId=${userId}&userRole=${userRole}`);
+            const response = await fetch(`${API_URL}/frais/eleve/${eleve.id}/frais?userId=${userId}&userRole=${userRole}`);
             
             if (response.ok) {
               const fraisData = await response.json();
@@ -77,8 +77,8 @@ useEffect(() => {
         const userRole = localStorage.getItem('userRole');
         
         const [elevesRes, classesRes] = await Promise.all([
-          fetch(`${API_URL}/api/eleves?userId=${userId}&userRole=${userRole}`),
-          fetch(`${API_URL}/api/classes?userId=${userId}&userRole=${userRole}`)
+          fetch(`${API_URL}/eleves?userId=${userId}&userRole=${userRole}`),
+          fetch(`${API_URL}/classes?userId=${userId}&userRole=${userRole}`)
         ]);
   
         if (!elevesRes.ok || !classesRes.ok) {
