@@ -4,7 +4,7 @@ import {
   Save, RefreshCw, Shield, School, 
   Database, AlertCircle 
 } from 'lucide-react';
-
+import { API_URL } from '../../config/api.config';
 function Settings() {
   // Au début du composant, assurez-vous que toutes les propriétés ont des valeurs par défaut:
 const [settings, setSettings] = useState({
@@ -44,7 +44,7 @@ const [settings, setSettings] = useState({
         
         try {
           // Essayer d'abord l'API
-          const response = await fetch(`http://localhost:5000/api/admin/settings?userId=${userId}&userRole=${userRole}`);
+          const response = await fetch(`${API_URL}/admin/settings?userId=${userId}&userRole=${userRole}`);
           
           if (response.ok) {
             const data = await response.json();
@@ -91,7 +91,7 @@ const [settings, setSettings] = useState({
     try {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
-      const response = await fetch(`http://localhost:5000/api/admin/settings?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/admin/settings?userId=${userId}&userRole=${userRole}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ const [settings, setSettings] = useState({
   const handleBackup = async () => {
     setBackupInProgress(true);
     try {
-      const response = await fetch('http://localhost:5000/api/admin/backup', {
+      const response = await fetch(`${API_URL}/admin/backup`, {
         method: 'POST',
       });
 
