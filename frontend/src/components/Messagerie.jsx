@@ -491,7 +491,7 @@ const Messagerie = () => {
         }
         
         // Également utiliser l'API REST pour s'assurer que le changement est persistant
-        console.log("Envoi de requête à:", ``${API_URL}/messages/${messageId}/read`);
+        console.log("Envoi de requête à:", `${API_URL}/messages/${messageId}/read`);
         const response = await fetch(`${API_URL}/messages/${messageId}/read`, {
             method: 'PUT'
         });
