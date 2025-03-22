@@ -8,6 +8,7 @@ import {
   GraduationCap
 } from 'lucide-react';
 import { getCoursForClasse, getNotesForEleve } from '../../services/api';
+import { API_URL } from '../../config/api.config';
 
 function EleveDashboard() {
   const [cours, setCours] = useState([]);
@@ -31,7 +32,7 @@ function EleveDashboard() {
         }
     
         // Charger les données de l'élève
-        const userResponse = await fetch(`http://localhost:5000/api/eleves/${userId}`);
+        const userResponse = await fetch(`${API_URL}/eleves/${userId}`);
         const userData = await userResponse.json();
         setUserInfo(userData);
     
