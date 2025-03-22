@@ -16,6 +16,7 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { getNotesForEleve } from '../../services/api';
+import { API_URL } from '../../config/api.config';
 
 function BulletinEleve() {
   const [bulletinData, setBulletinData] = useState(null);
@@ -75,7 +76,7 @@ function BulletinEleve() {
         }
 
         // Charger les informations de l'élève
-        const eleveResponse = await fetch(`http://localhost:5000/api/eleves/${eleveId}`);
+        const eleveResponse = await fetch(`${API_URL}/eleves/${eleveId}`);
         const eleveData = await eleveResponse.json();
 
         // Charger les notes
