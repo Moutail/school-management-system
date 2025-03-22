@@ -6,6 +6,7 @@ import {
   List, Clock, Star
 } from 'lucide-react';
 import { getCoursForClasse, getMatieresForProfesseur } from '../../services/api';
+import { API_URL } from '../../config/api.config';
 
 function CoursList() {
   const [cours, setCours] = useState([]);
@@ -47,7 +48,7 @@ function CoursList() {
           }, []);
         } else {
           // Pour les élèves, charger toutes les matières de la classe
-          const matieresResponse = await fetch(`http://localhost:5000/api/matieres/classe/${classeId}?userId=${userId}&userRole=${userRole}`);
+          const matieresResponse = await fetch(`${API_URL}/matieres/classe/${classeId}?userId=${userId}&userRole=${userRole}`);
           
           if (!matieresResponse.ok) {
             console.warn('Erreur lors du chargement des matières de la classe');
