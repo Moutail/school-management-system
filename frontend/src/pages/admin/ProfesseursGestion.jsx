@@ -4,6 +4,7 @@ import {
   Plus, Edit2, Trash2, Search, 
   Mail, Book, GraduationCap, RefreshCw 
 } from 'lucide-react';
+import { API_URL } from '../../config/api.config';
 
 function ProfesseursGestion() {
   const [professeurs, setProfesseurs] = useState([]);
@@ -26,9 +27,9 @@ function ProfesseursGestion() {
     const fetchData = async () => {
       try {
         const [professeursRes, classesRes, matieresRes] = await Promise.all([
-          fetch('http://localhost:5000/api/professeurs'),
-          fetch('http://localhost:5000/api/classes'),
-          fetch('http://localhost:5000/api/matieres')
+          fetch(`${API_URL}/professeurs`),
+          fetch(`${API_URL}/classes`),
+          fetch(`${API_URL}/matieres`)
         ]);
 
         const [professeursData, classesData, matieresData] = await Promise.all([
@@ -58,8 +59,8 @@ function ProfesseursGestion() {
       const userRole = localStorage.getItem('userRole');
       
       const url = editingProfesseur 
-        ? `http://localhost:5000/api/professeurs/${editingProfesseur.id}?userId=${userId}&userRole=${userRole}`
-        : `http://localhost:5000/api/professeurs?userId=${userId}&userRole=${userRole}`;
+        ? `${API_URL}/professeurs/${editingProfesseur.id}?userId=${userId}&userRole=${userRole}`
+        : `${API_URL}/professeurs?userId=${userId}&userRole=${userRole}`;
         
       const response = await fetch(url, {
         method: editingProfesseur ? 'PUT' : 'POST',
@@ -71,7 +72,7 @@ function ProfesseursGestion() {
       });
   
       if (response.ok) {
-        const updatedProfesseurs = await fetch(`http://localhost:5000/api/professeurs?userId=${userId}&userRole=${userRole}`)
+        const updatedProfesseurs = await fetch(`${API_URL}/professeurs?userId=${userId}&userRole=${userRole}`)
           .then(res => res.json());
         setProfesseurs(updatedProfesseurs);
         setShowModal(false);
@@ -95,7 +96,7 @@ function ProfesseursGestion() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      const response = await fetch(`http://localhost:5000/api/professeurs/${professeurId}?userId=${userId}&userRole=${userRole}`, {
+      const response = await fetch(`${API_URL}/professeurs/${professeurId}?userId=${userId}&userRole=${userRole}`, {
         method: 'DELETE',
       });
   
@@ -117,7 +118,7 @@ function ProfesseursGestion() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/admin/reset-password/professeur/${professeurId}`,
+        `${API_URL}/admin/reset-password/professeur/${professeurId}`,
         { method: 'POST' }
       );
 
