@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { PlusCircle } from 'lucide-react';
+import { API_URL } from '../config/api.config';
 
 function MatiereForm({ classeId, onMatiereCreated }) {
   const [nom, setNom] = useState('');
@@ -19,7 +20,7 @@ function MatiereForm({ classeId, onMatiereCreated }) {
       const userRole = localStorage.getItem('userRole');
       
       // Ajouter les paramètres userId et userRole à l'URL
-      const url = `http://localhost:5000/api/matieres?userId=${professeurId}&userRole=${userRole}`;
+      const url = `${API_URL}/matieres?userId=${professeurId}&userRole=${userRole}`;
       
       const response = await fetch(url, {
         method: 'POST',
