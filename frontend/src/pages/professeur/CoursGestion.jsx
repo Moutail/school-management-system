@@ -58,7 +58,7 @@ function CoursGestion() {
 
         // Charger tous les cours directement depuis l'API
         try {
-          const response = await fetch('http://localhost:5000/api/cours');
+          const response = await fetch(`${API_URL}/cours`);
           const coursData = await response.json();
           setCours(coursData);
         } catch (error) {
@@ -80,7 +80,7 @@ function CoursGestion() {
   const refreshData = async () => {
     try {
       setIsRefreshing(true);
-      const response = await fetch('http://localhost:5000/api/cours');
+      const response = await fetch(`${API_URL}/cours`);
       const coursData = await response.json();
       setCours(coursData);
     } catch (error) {
