@@ -7,6 +7,7 @@ import {
   Search, ChevronRight, Book, AlertCircle,
   ArrowRight, Download
 } from 'lucide-react';
+import { API_URL } from '../../config/api.config';
 
 function ParentNotes() {
   const [notes, setNotes] = useState([]);
@@ -26,7 +27,7 @@ function ParentNotes() {
         const headers = { 'Authorization': `Bearer ${token}` };
         
         // Récupérer les infos de l'élève
-        const eleveRes = await fetch(`http://localhost:5000/api/eleves/${eleveId}`, { headers });
+        const eleveRes = await fetch(`${API_URL}/eleves/${eleveId}`, { headers });
         
         if (eleveRes.ok) {
           const eleveData = await eleveRes.json();
@@ -38,7 +39,7 @@ function ParentNotes() {
   
         // Récupérer les notes
         const notesRes = await fetch(
-          `http://localhost:5000/api/notes/eleve/${eleveId}?userId=${userId}&userRole=parent`, 
+          `${API_URL}/notes/eleve/${eleveId}?userId=${userId}&userRole=parent`, 
           { headers }
         );
         
