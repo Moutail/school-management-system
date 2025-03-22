@@ -28,8 +28,8 @@ function AdminElevesGestion() {
     const fetchData = async () => {
       try {
         const [elevesRes, classesRes] = await Promise.all([
-          fetch('${API_URL}/api/eleves'),
-          fetch('${API_URL}/api/classes')
+          fetch(`${API_URL}/api/eleves`),
+          fetch(`${API_URL}/api/classes`)
         ]);
 
         const [elevesData, classesData] = await Promise.all([
@@ -55,13 +55,13 @@ function AdminElevesGestion() {
       const userId = localStorage.getItem('userId');
       const userRole = localStorage.getItem('userRole');
       
-      let url = `${API_URL}/api/eleves?userId=${userId}&userRole=${userRole}`;
+      let url = `${API_URL}/eleves?userId=${userId}&userRole=${userRole}`;
       let method = 'POST';
       let body = formData;
       
       // Si on modifie un élève existant
       if (editingEleve) {
-        url = `${API_URL}/api/eleves/${editingEleve.id}?userId=${userId}&userRole=${userRole}`;
+        url = `${API_URL}/eleves/${editingEleve.id}?userId=${userId}&userRole=${userRole}`;
         method = 'PUT';
         body = { ...formData };
         // On peut retirer le mot de passe si vide pour la modification
@@ -79,7 +79,7 @@ function AdminElevesGestion() {
       });
   
       if (response.ok) {
-        const updatedEleves = await fetch(`${API_URL}/api/eleves?userId=${userId}&userRole=${userRole}`).then(res => res.json());
+        const updatedEleves = await fetch(`${API_URL}/eleves?userId=${userId}&userRole=${userRole}`).then(res => res.json());
         setEleves(updatedEleves);
         setShowModal(false);
         setFormData({
@@ -108,7 +108,7 @@ function AdminElevesGestion() {
         const userId = localStorage.getItem('userId');
         const userRole = localStorage.getItem('userRole');
         
-        const response = await fetch(${API_URL}/api/eleves/${id}?userId=${userId}&userRole=${userRole}`, {
+        const response = await fetch(`${API_URL}/eleves/${id}?userId=${userId}&userRole=${userRole}`, {
           method: 'DELETE',
         });
         
